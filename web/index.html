@@ -1,1 +1,80 @@
-asd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>Show Schedule</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+              <h4>My Schedule</h4>
+            </div>
+        </div>
+        <div class="col-md-12 mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:5%">#</th>
+                        <th scope="col" style="width:5%">Action</th>
+                        <th scope="col" style="width:20%">Date</th>
+                        <th scope="col" style="width:20%">Time</th>
+                        <th scope="col" style="width:50%">Message</th>
+                      
+                    </tr>
+                </thead>
+                <tbody id="data">
+                    
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            //Your Code
+        };
+        firebase.initializeApp(config);
+       
+        var i=1;
+        firebase.database().ref('schedules').once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                document.getElementById('data').innerHTML += `
+                    <tr>
+                        <th scope="row">`+i+++`</th>
+                        <th scope="row"><button class='btn btn-danger btn-sm' onclick='deleteData("`+childKey+`")'>Delete</button></th>
+                        <td>`+childData.date+`</td>
+                        <td>`+childData.time+`</td>
+                        <td>`+childData.msg+`</td>
+                    </tr>
+                `;
+            });
+        });
+        function deleteData(id){
+            console.log(id);
+            if(confirm("Do you want to Delete ?")){
+                console.log(id);
+                firebase.database().ref('schedules/'+id).remove().then(function(){
+                    alert('Data Deleted');
+                    location.reload();
+                }).catch(function(e){
+                    alert(e);
+                })
+            }
+            else{
+                console.log("Do Nothing");
+            }
+        }
+    </script>
+    
+</body>
+</html>
