@@ -38,7 +38,7 @@ function addNewSchedule(agent){
     var date =agent.parameters.b;
     var msg = agent.parameters.c;
    
-    firebase.database().ref('schedule').push({
+    firebase.database().ref('schedules').push({
         time:time,
         date:date,
         message:msg
