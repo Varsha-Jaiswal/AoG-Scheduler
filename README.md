@@ -28,7 +28,8 @@
  8) Add `const firebase = require("firebase");`
  9) Add `"firebase ":"*"` in dependencies.
  10) Add Firebase key in `index.js` file.
- 10) Click on Deploy Button and Test it.
+ 10) Click on Deploy Button
+ 11) Test it.
 
 
 ### Developed By Varsha Jaiswal & Sonakshi Shukla
